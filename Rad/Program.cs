@@ -63,10 +63,14 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(b => {
-    b.AllowAnyHeader();
-    //b.AllowAnyMethod();
-    //b.AllowCredentials();
-    b.AllowAnyOrigin();
+    b.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    //b.AllowAnyHeader();
+    ////b.AllowAnyMethod();
+    ////b.AllowCredentials();
+    //b.AllowAnyOrigin();
 });
 
 app.UseAuthorization();

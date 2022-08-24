@@ -14,7 +14,7 @@ namespace Rad.Db
             this._logger = logger;
         }
 
-        private const int LongExecuteTimeMillesecond = 1000;
+        private const int LongExecuteTimeMillesecond = 500;
 
         public override DbDataReader ReaderExecuted(DbCommand command, CommandExecutedEventData eventData, DbDataReader result)
         {
