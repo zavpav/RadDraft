@@ -1,0 +1,11 @@
+<div> header</div>
+<nav>
+    <dx-menu
+            [dataSource]="menuItems"
+            displayExpr="name"
+            orientation="horizontal"
+            [hideSubmenuOnMouseLeave]="true"
+            (onItemClick)="itemClick($event)"
+        >
+    </dx-menu>
+</nav>
