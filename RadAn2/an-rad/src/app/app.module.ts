@@ -8,7 +8,11 @@ import {
   DxDataGridModule,
   DxButtonModule,
   DxTooltipModule,
-  DxPopoverModule
+  DxPopoverModule,
+
+  DxFormModule,
+  DxTextBoxModule,
+  DxDateBoxModule
 } from 'devextreme-angular';
 
 
@@ -21,6 +25,7 @@ import { ListGridComponent } from './shared/list-grid/list-grid.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { DocRadListComponent } from './rad/doc/doc-rad-list/doc-rad-list.component';
 import { DocRadItemComponent } from './rad/doc/doc-rad-item/doc-rad-item.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -36,13 +41,18 @@ import { DocRadItemComponent } from './rad/doc/doc-rad-item/doc-rad-item.compone
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     DxMenuModule,
     DxBulletModule,
     DxTemplateModule,
     DxDataGridModule,
     DxButtonModule,
     DxTooltipModule,
-    DxPopoverModule
+    DxPopoverModule,
+    
+    DxFormModule,
+    DxTextBoxModule,
+    DxDateBoxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

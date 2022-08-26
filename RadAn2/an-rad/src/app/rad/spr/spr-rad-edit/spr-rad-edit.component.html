@@ -1,1 +1,34 @@
 <p>spr-rad-edit works!</p>
+{{this.entityId}}
+
+<ng-container *ngIf="this.meta">
+    <form (submit)="onFormSubmit($event)">
+        <dx-form id="form"
+                #form
+                [(formData)]="entity" 
+                [customizeItem]="customizationFormItem"
+                labelMode="floating"
+                (onFieldDataChanged)="dataChanged($event)"
+                [showValidationSummary]="false"
+                (validationGroup)="validationForm($event)"
+                (formDataChange)="validationForm($event)"
+            >
+            <dxi-item dataField="fullName">
+                <!-- <dxi-validation-rule></dxi-validation-rule> -->
+            </dxi-item>
+            <dxi-item dataField="inn"></dxi-item>
+            <dxi-item dataField="kpp"></dxi-item>
+            <dxi-item itemType="group" colCount="6">
+                <dxi-item dataField="onDate"></dxi-item>
+                <dxi-item dataField="toDate"></dxi-item>
+            </dxi-item>
+            <dxi-item itemtype="simple" 
+                #saveButton
+                horizontalAlignment="left"
+                editorType="dxButton" 
+                [disabled]="hasError"
+                [editorOptions]="{ useSubmitBehavior: true , text: 'Сохранить', type: 'success' }" >  
+            </dxi-item>          
+        </dx-form>
+    </form>
+</ng-container>

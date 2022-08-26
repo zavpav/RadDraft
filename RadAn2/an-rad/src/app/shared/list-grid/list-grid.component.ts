@@ -31,10 +31,13 @@ export interface ActionInfo{
 interface CurrentTooltipInfo {
   target: string
   tooltip: string
+  rowId: string
 }
 
 interface InternalActionInfo{
+  trackBy: string;
   id: string;
+  objId: string;
   glyph: string;
   tooltip: string;
   href?: string;
@@ -48,7 +51,16 @@ interface InternalActionInfo{
 export class ListGridComponent implements OnInit {
 
   dataSource!: CustomStore<any, any>;
-  @Input() endpoint!: string;
+  @Input() serverController!: string;
+  
+  @Input() mainRouting!: string;
+  getMainRoutingInfo(): string[] {
+    let routing = this.mainRouting;
+    if (routing.startsWith('/')){
+      routing = routing.substring(1)
+    }
+    return ['/'].concat(routing.split('/'))
+  }
 
   @Input() columns!: ColumnInfo[];
   getColumnsCache!: ColumnInfo[];
@@ -60,6 +72,22 @@ export class ListGridComponent implements OnInit {
   }
 
 
+  getRouteForAction(id: number, actionInfo: InternalActionInfo): Array<string> {
+    var routeInfo: string[] = []
+    if (!!actionInfo.href){
+      routeInfo.push(actionInfo.href)
+    } else {
+      routeInfo = this.getMainRoutingInfo();
+      routeInfo.push('item')
+      routeInfo.push(id.toString())
+    }
+    return routeInfo;
+  }
+
+
+
+
+
   currentTooltip?: CurrentTooltipInfo;
 
   showOperationTooltip($event : any, action: InternalActionInfo){
@@ -67,9 +95,10 @@ export class ListGridComponent implements OnInit {
     if (!this.currentTooltip || this.currentTooltip.target != $event.target.id){
       this.currentTooltip = {
         target: $event.target.id,
-        tooltip: "Тултип " + action.tooltip + " " + $event.target.id
-      }
+        tooltip: action.tooltip + " " + $event.target.id,
+        rowId: action.objId
 
+      }
     }
 
   }
@@ -92,8 +121,11 @@ export class ListGridComponent implements OnInit {
 
   }
   tooltipshown($event: any){
-    console.log("aaa")
-    console.log($event.element.id)
+
+  }
+
+  trackByFn(index: number, actionInfo: InternalActionInfo){
+    return actionInfo.trackBy
   }
 
   parsedActions(column: any): InternalActionInfo[] {
@@ -103,50 +135,41 @@ export class ListGridComponent implements OnInit {
     if (!!actionInfos){
       const ops: InternalActionInfo[] = []
       actionInfos.forEach(e => {
-        ops.push(this.parseOperation(e))
+        ops.push(this.parseOperation(data.id, e))
       })
 
       return ops;
     }
     else{
-      return [
-        {
-          id: "a",
-          glyph: "a",
-          tooltip: "Операция А",
-          href: "spr/rad"
-        },
-        {
-          id: "b",
-          glyph: "b",
-          tooltip: "Операция Б",
-          href: "spr/rad"
-        },
-      ]
+      return []
     }
   }
 
-  private parseOperation(op: ActionInfo): InternalActionInfo {
+  private parseOperation(dataId: number, op: ActionInfo): InternalActionInfo {
     //🖌🛠
     //Misc Symbols and Pictographs
     if (op.operation == "edit"){
       return {
+        objId: dataId.toString(),
+        trackBy: op.operation+dataId,
         id: op.operation,
         glyph: "🖹",
         tooltip: "Редактирование",
-        href: "aaaa" 
       }
     }
     else if(op.operation == "delete"){
       return {
+        objId: dataId.toString(),
+        trackBy: op.operation+dataId,
         id: op.operation,
         glyph: "🗑",
         tooltip: "Удаление",
-        href: "aaaa" 
       }
     }
     else {
       return {
+        objId: dataId.toString(),
+        trackBy: op.operation+dataId,
         id: op.operation,
         glyph: op.glyph ?? "err",
         tooltip: op.tooltip ?? "Непонятно",
@@ -183,13 +206,19 @@ export class ListGridComponent implements OnInit {
     return
     (
       {     text: 'asdfasdf' })
-    };
+  };
   
+  
+  // Получить полный endpoint для получения данных
+  private getFullListEndpoint(): string{
+    return environment.mainEndpoint + this.serverController + "/List";
+  }
+
   ngOnInit(): void {
-    console.log("Default grid " + this.endpoint)
+    console.log("Default grid " + this.getFullListEndpoint())
     let stor = AspNetData.createStore({
         key: 'id',
-        loadUrl: environment.mainEndpoint + this.endpoint,
+        loadUrl: this.getFullListEndpoint(),
         onBeforeSend: (operation: string, ajaxSettings : {data? : any}) => {
             if (operation == "load")
             {
