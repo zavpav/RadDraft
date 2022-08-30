@@ -16,6 +16,7 @@ export class RadItemComponent implements OnInit {
     
     return 1;
   }
+  
   ngOnInit(): void {
     this.selectedId = Number(this.route.snapshot.params["id"]);
   }

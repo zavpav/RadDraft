@@ -1,1 +1,58 @@
 <p>doc-rad-item works!</p>
+<ng-container *ngIf="this.meta">
+    <form (submit)="onFormSubmit($event)">
+        <dx-form id="form"
+                #form
+                [(formData)]="entity" 
+                [customizeItem]="customizationFormItem"
+                labelMode="floating"
+                (onFieldDataChanged)="dataChanged($event)"
+                [showValidationSummary]="false"
+                (validationGroup)="validationForm($event)"
+                (formDataChange)="validationForm($event)"
+            >
+            <dxi-item itemType="group" colCount="6">
+                <dxi-item dataField="docNum"></dxi-item>
+                <dxi-item dataField="docDt"></dxi-item>
+            </dxi-item>
+            <dxi-item dataField="descr"></dxi-item>
+            
+        </dx-form>
+    </form>
+
+    <dx-tab-panel 
+        [animationEnabled]="true"
+    >
+        <dxi-item title="Сведения">
+            <form (submit)="onFormSubmit($event)">
+                <dx-form id="form"
+                        #form
+                        [(formData)]="entity" 
+                        [customizeItem]="customizationFormItem"
+                        labelMode="floating"
+                        (onFieldDataChanged)="dataChanged($event)"
+                        [showValidationSummary]="false"
+                        (validationGroup)="validationForm($event)"
+                        (formDataChange)="validationForm($event)"
+                    >
+                    <dxi-item itemType="group" colCount="6">
+                        <dxi-item dataField="docNum"></dxi-item>
+                        <dxi-item dataField="docDt"></dxi-item>
+                    </dxi-item>
+                    <dxi-item dataField="descr"></dxi-item>
+                    <dxi-item itemType="group" colCount="5">
+                        <dxi-item dataField="bossFio"></dxi-item>
+                        <dxi-item dataField="bossStat"></dxi-item>
+                    </dxi-item>
+                    <dxi-item dataField="executerFio"></dxi-item>
+                    <dxi-item dataField="executerStat"></dxi-item>
+                    <dxi-item dataField="executerPhone"></dxi-item>
+                </dx-form>
+            </form>
+        </dxi-item>
+        <dxi-item title="РАД">
+            <app-edit-grid [dataSource]="entityRows" [columns]="getRowsColumns"></app-edit-grid>
+        </dxi-item>
+
+    </dx-tab-panel>
+</ng-container>

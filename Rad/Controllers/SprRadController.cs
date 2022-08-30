@@ -3,10 +3,6 @@ using AutoMapper.QueryableExtensions;
 using Rad.Db;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 
 namespace Rad.Controllers;
 
@@ -100,9 +96,6 @@ public class SprRadController : Controller
     }
 
 
-
-
-
     /// <summary> Получить полный документ </summary>
     [HttpGet("Entity")]
     public async Task<JsonResult> Get(long id, bool withMeta = false)
@@ -122,9 +115,8 @@ public class SprRadController : Controller
         if (!withMeta)
             return Json(rad);
 
-        return Json(this.ReturnWithMeta(rad));
+        return Json(DataWithMetaHelper.ReturnWithMeta(rad));
     }
-
 
     [HttpPost("Entity")]
     public async Task<IActionResult> Save([FromBody] SprRadItemDto fullRadItem)
@@ -150,77 +142,6 @@ public class SprRadController : Controller
         }
 
         return Ok();
-    }
-
-    public Task<DataWithMeta<T>> ReturnWithMeta<T>(T? entity)
-        where T : class
-    {
-        var res = new DataWithMeta<T>(entity);
-        
-        foreach (var pi in typeof(T).GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
-        {
-            var meta = new MetaInformation(pi.Name);
-
-            if (pi.PropertyType == typeof(DateTime) || pi.PropertyType == typeof(DateTime?))
-                meta.Type = "date";
-            else if (pi.PropertyType == typeof(string))
-                meta.Type = "string";
-            else if (pi.PropertyType == typeof(int) || pi.PropertyType == typeof(long) || pi.PropertyType == typeof(int?) || pi.PropertyType == typeof(long?))
-                meta.Type = "int";
-            else if (pi.PropertyType == typeof(double) || pi.PropertyType == typeof(double?))
-                meta.Type = "double";
-
-
-            var nullabilityContext = new NullabilityInfoContext();
-            var nullabilityInfo = nullabilityContext.Create(pi);
-            if (nullabilityInfo.WriteState == NullabilityState.NotNull)
-            {
-                meta.IsRequire = true;
-            }
-
-            foreach (var att in pi.GetCustomAttributes(true))
-            {
-                if (att is DescriptionAttribute desc)
-                    meta.Caption = desc.Description;
-                else if (att is RequiredAttribute req)
-                    meta.IsRequire = true;
-                else if (att is MaxLengthAttribute ml)
-                    meta.MaxLen = ml.Length;
-            }
-            res.Meta.Add(meta);
-        }
-
-        return Task.FromResult(res);
-    }
-
-    public class MetaInformation
-    { 
-        public MetaInformation(string name)
-        {
-            this.Name = name;
-            this.Caption = name;
-        }
-
-        public string Name { get; }
-
-        public string Caption { get; set; }
-
-        public bool IsRequire { get; set; }
-
-        public string Type { get; set; } = "string";
-
-        public int MaxLen { get; set; }
-    }
-
-    public class DataWithMeta<T>
-    {
-        public DataWithMeta(T? entity)
-        {
-            this.Entity = entity;
-            this.Meta = new List<MetaInformation>();
-        }
-        public T? Entity;
-        public List<MetaInformation> Meta;
     }
 
     /// <summary> Dto для объекта выгружаемого в список Данных РАД </summary>

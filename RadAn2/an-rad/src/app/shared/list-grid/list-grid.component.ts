@@ -5,8 +5,6 @@ import { environment } from 'src/environments/environment';
 import CustomStore from "devextreme/data/custom_store";
 import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 
-import Tooltip from "devextreme/ui/tooltip";
-
 // Описание колонки для грида devextreme
 export interface ColumnInfo {
   caption: string;

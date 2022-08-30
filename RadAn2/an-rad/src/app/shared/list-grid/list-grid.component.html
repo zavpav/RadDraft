@@ -38,17 +38,18 @@
     
     <div *dxTemplate="let d of 'actionsTemplate'">
         <ng-container *ngFor="let actionInfo of parsedActions(d); trackBy: trackByFn">
+<!--             
+            <dxi-button name="edit"></dxi-button>
+            <dxi-button name="delete"></dxi-button>             -->
             <a
                 id="{{actionInfo.trackBy}}"
-                [routerLink]="['/', 'rad', 'spr', 'item', d.data.id]"
+                [routerLink]="getRouteForAction(d.data.id, actionInfo)"
                 (mouseenter)="showOperationTooltip($event, actionInfo)"
                 (mouseleave)="hideOperationTooltip($event)"
             >
                 <!-- (mousemove)="moveOperationTooltip($event)" -->
                 <span style="font-size: larger; color: black; ">{{ actionInfo.glyph }}</span>    
             </a>
-
-
         </ng-container>
         
         <dx-tooltip 

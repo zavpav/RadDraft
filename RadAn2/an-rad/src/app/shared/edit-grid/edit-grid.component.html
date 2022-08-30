@@ -1,0 +1,50 @@
+<dx-data-grid
+        id="editGrid"
+        [dataSource]="dataSource"
+        [wordWrapEnabled]="true"
+        (onCellPrepared)="onCellPrepared($event)"
+        (onEditorPreparing)="onEditorPreparing($event)"
+        (onEditorPrepared)="onEditorPrepared($event)"
+        (onEditingStart)="onEditingStart($event)"
+        (onFocusedCellChanging)="onFocusedCellChanging($event)"
+        (onContentReady)="contentReady($event)"
+        
+        [keyExpr]="'id'"
+    >
+    
+    <dxo-keyboard-navigation
+        [editOnKeyPress]="true"
+        [enterKeyAction]="'startEdit'"
+    ></dxo-keyboard-navigation>
+    <!-- [enterKeyDirection]="enterKeyDirection" -->
+
+    <dxo-filter-panel [visible]="false" ></dxo-filter-panel>
+    <dxo-filter-row [visible]="false"></dxo-filter-row>
+
+    <dxo-search-panel [visible]="false" [highlightCaseSensitive]="false"></dxo-search-panel>
+    <dxo-group-panel [visible]="false"></dxo-group-panel>
+
+    <dxo-editing mode="cell"
+        [allowUpdating]="true"
+        startEditAction="dblClick"
+    ></dxo-editing>
+
+    <dxi-column *ngFor="let c of getColumns()" 
+        [caption]="c.caption" 
+        [dataField]="c.dataField" 
+        [dataType]="c.dataType" 
+        [width]="c.width"
+        [format]="c.format"
+        [allowSorting]="true"
+        [allowResizing]="true"
+
+        [allowEditing]="true"
+
+        [allowSearch]="false"
+        [allowReordering]="false"
+        [allowFiltering]="false"
+        [allowExporting]="false"
+        [allowHiding]="false"
+        [allowGrouping]="false"
+    ></dxi-column>
+</dx-data-grid>

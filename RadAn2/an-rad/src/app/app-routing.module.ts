@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DocRadItemComponent } from './rad/doc/doc-rad-item/doc-rad-item.component';
 import { DocRadListComponent } from './rad/doc/doc-rad-list/doc-rad-list.component';
 import { SprRadEditComponent } from './rad/spr/spr-rad-edit/spr-rad-edit.component';
 import { SprRadListComponent } from './rad/spr/spr-rad-list/spr-rad-list.component';
@@ -30,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: "rad/doc/item/:id",
-    component: SprRadEditComponent,
+    component: DocRadItemComponent,
     data: {
       title: "Просмотр/редактирование документов РАД"
     }
@@ -38,7 +39,7 @@ const routes: Routes = [
 
   {
     path: "",
-    redirectTo: "rad/spr/item/321",
+    redirectTo: "rad/doc/item/1097323990887",
     pathMatch: "full"
   },
   {

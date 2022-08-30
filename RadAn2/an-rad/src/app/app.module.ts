@@ -12,9 +12,9 @@ import {
 
   DxFormModule,
   DxTextBoxModule,
-  DxDateBoxModule
+  DxDateBoxModule,
+  DxTabPanelModule
 } from 'devextreme-angular';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,11 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { DocRadListComponent } from './rad/doc/doc-rad-list/doc-rad-list.component';
 import { DocRadItemComponent } from './rad/doc/doc-rad-item/doc-rad-item.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EditGridComponent } from './shared/edit-grid/edit-grid.component';
+
+import { locale } from 'devextreme/localization';
+locale('ru')
+
 
 @NgModule({
   declarations: [
@@ -36,7 +41,8 @@ import { HttpClientModule } from '@angular/common/http';
     ListGridComponent,
     NotFoundComponent,
     DocRadListComponent,
-    DocRadItemComponent
+    DocRadItemComponent,
+    EditGridComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
     DxButtonModule,
     DxTooltipModule,
     DxPopoverModule,
-    
+    DxTabPanelModule,
     DxFormModule,
     DxTextBoxModule,
     DxDateBoxModule

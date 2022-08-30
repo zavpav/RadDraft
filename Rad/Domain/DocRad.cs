@@ -4,7 +4,7 @@
 public class DocRad
 {
     /// <summary> ИД </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     /// <summary> Дата документа </summary>
     public string DocNum { get; set; } = "";

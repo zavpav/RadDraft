@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DxFormComponent } from 'devextreme-angular';
+import { MetaInformation } from 'src/app/SharedClasses/MetaInformation';
 import { environment } from 'src/environments/environment';
 
 interface RadEdit{
@@ -27,20 +28,6 @@ interface RadEdit{
     // Дата закрытия организации (null если ещё активна)
     toDate?: Date
 }
-
-interface MetaInformation{
-  name: string
-  caption?: string
-  type?: string
-  isRequire?: boolean
-  maxLen?:number
-}
-
-interface DataWithMeta<T>{
-  entity: T
-  meta: MetaInformation[]
-}
-
 
 @Component({
   selector: 'app-spr-rad-edit',
@@ -146,7 +133,7 @@ export class SprRadEditComponent implements OnInit {
       .subscribe((e:any) => {
         console.log("init in ngInit")
         this.entity = e.result.entity
-        this.meta = e.result.meta
+        this.meta = Object.values(e.result.meta)[0] as MetaInformation[];
       });
       
     this.isReadOnly = false
