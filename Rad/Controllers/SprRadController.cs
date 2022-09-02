@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.SignalR;
 using Rad.Db;
+using Rad.Services.Queue;
+using Rad.SignalR;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -14,9 +17,21 @@ public class SprRadController : Controller
     private readonly IDbContextFactory<RadDbContext> _dbContextFactory;
     private readonly MapperConfiguration _autoMapperConfiguration;
 
-    public SprRadController(IDbContextFactory<RadDbContext> dbContextFactory)
+    private readonly IBackgroundTaskQueue _taskQueue;
+    private readonly IHubContext<NotifyHub, IClientNotifier> _hubContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public SprRadController(IDbContextFactory<RadDbContext> dbContextFactory, 
+        IBackgroundTaskQueue taskQueue,
+        IHubContext<NotifyHub, IClientNotifier> hubContext,
+        IHttpContextAccessor httpContextAccessor)
     {
         this._dbContextFactory = dbContextFactory;
+
+        this._taskQueue = taskQueue;
+        this._hubContext = hubContext;
+        this._httpContextAccessor = httpContextAccessor;
+
         this._autoMapperConfiguration = new MapperConfiguration(
             c => { 
                 c.CreateProjection<SprRad, SprRadListDto>(); 
@@ -143,6 +158,15 @@ public class SprRadController : Controller
 
         return Ok();
     }
+
+    private string ConnectionId
+    {
+        get
+        {
+            return _httpContextAccessor?.HttpContext?.Request.Headers["x-signalr-connection"] ?? "";
+        }
+    }
+
 
     /// <summary> Dto для объекта выгружаемого в список Данных РАД </summary>
     public class SprRadItemDto

@@ -1,8 +1,10 @@
 using Rad.Db;
+using Rad.Services.Queue;
+using Rad.SignalR;
 using Serilog;
 using Serilog.Events;
 using System.Reflection;
-
+using System.Text.Json.Serialization;
 
 Log.Logger = new LoggerConfiguration()
         .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -15,7 +17,9 @@ Log.Logger.Here().Fatal("Start {Start}", DateTime.Now);
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog(); 
+builder.Host.UseSerilog();
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddPooledDbContextFactory<RadDbContext>(opt => opt
@@ -25,6 +29,17 @@ builder.Services.AddPooledDbContextFactory<RadDbContext>(opt => opt
         .EnableSensitiveDataLogging(true)
         .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
         );
+
+builder.Services.AddSignalR()
+    .AddJsonProtocol(opt => opt.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
+builder.Services.AddHostedService<QueuedHostedService>();
+builder.Services.AddSingleton<IBackgroundTaskQueue>(ctx =>
+{
+    var queueCapacity = 100; // надо определять в переменных окружения
+    return new BackgroundTaskQueue(queueCapacity);
+});
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -62,6 +77,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
 app.UseCors(b => {
     b.WithOrigins("http://localhost:4200")
             .AllowAnyMethod()
@@ -74,6 +90,8 @@ app.UseCors(b => {
 });
 
 app.UseAuthorization();
+
+app.MapHub<NotifyHub>("/notify");
 
 app.MapControllers();
 

@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.SignalR;
 using Rad.Db;
+using Rad.Services;
+using Rad.Services.Queue;
+using Rad.SignalR;
 using System.ComponentModel;
 
 namespace Rad.Controllers;
@@ -11,13 +15,23 @@ namespace Rad.Controllers;
 public class DocRadController : Controller
 {
     private readonly IDbContextFactory<RadDbContext> _dbContextFactory;
-
     private readonly MapperConfiguration _autoMapperConfiguration;
 
+    private readonly IBackgroundTaskQueue _taskQueue;
+    private readonly IHubContext<NotifyHub, IClientNotifier> _hubContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
     /// <summary> Документы РАД </summary>
-    public DocRadController(IDbContextFactory<RadDbContext> dbContextFactory)
+    public DocRadController(IDbContextFactory<RadDbContext> dbContextFactory,
+            IBackgroundTaskQueue taskQueue,
+            IHubContext<NotifyHub, IClientNotifier> hubContext,
+            IHttpContextAccessor httpContextAccessor)
     {
         this._dbContextFactory = dbContextFactory;
+
+        this._taskQueue = taskQueue;
+        this._hubContext = hubContext;
+        this._httpContextAccessor = httpContextAccessor;
 
         this._autoMapperConfiguration = new MapperConfiguration(
             c => {
@@ -111,6 +125,48 @@ public class DocRadController : Controller
             return Json(rad);
 
         return Json(DataWithMetaHelper.ReturnWithMeta(rad, d => d.DocRows));
+    }
+
+    /// <summary> Сохранить документ  </summary>
+    /// <returns>Json c signalToken'ом</returns>
+    [HttpPost("Entity")]
+    public async Task<IActionResult> Save()
+    {
+        var signalToken = Guid.NewGuid().ToString();
+        var signalConnectionId = this.ConnectionId;
+        var task = new Task(async () => await this.Saving(signalConnectionId, signalToken, new DocRadItemDto()));
+        await _taskQueue.QueueBackgroundWorkItemAsync(new Func<CancellationToken, ValueTask>(_ => new ValueTask(task)));
+        task.Start();
+        return Json(new ProgressNotify { ExecutionId = signalToken, Percent = 0, Message = "Start message" });
+    }
+
+    private string ConnectionId
+    {
+        get
+        {
+            return _httpContextAccessor?.HttpContext?.Request.Headers["x-signalr-connection"] ?? "";
+        }
+    }
+
+
+    private async Task Saving(string connectionId, string signalToken, DocRadItemDto fullRadItem)
+    {
+        await Task.Yield();
+
+        var mapper = this._autoMapperConfiguration.CreateMapper();
+        LogExtension.Log(Log.Logger, Serilog.Events.LogEventLevel.Information, $"Send 1 message {connectionId} {signalToken}");
+
+        await _hubContext.Clients.Client(connectionId).SendProgress(new ProgressNotify { ExecutionId = signalToken, Percent = 0, Message = "Step 1" });
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
+        LogExtension.Log(Log.Logger, Serilog.Events.LogEventLevel.Information, $"Send 2 message {connectionId} {signalToken}");
+        await _hubContext.Clients.Client(connectionId).SendProgress(new ProgressNotify { ExecutionId = signalToken, Percent = 40, Message = "Step 2" });
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
+        LogExtension.Log(Log.Logger, Serilog.Events.LogEventLevel.Information, $"Send 3 message {connectionId} {signalToken}");
+        await _hubContext.Clients.Client(connectionId).SendProgress(new ProgressNotify { ExecutionId = signalToken, Percent = 90, Message = "Step 3" });
+        await Task.Delay(TimeSpan.FromSeconds(5));
+
     }
 
     public class DocRadItemDto

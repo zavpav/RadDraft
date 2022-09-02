@@ -1,5 +1,8 @@
 <p>doc-rad-item works!</p>
 <ng-container *ngIf="this.meta">
+
+    <dx-button (onClick)="saveForm()">Отправить форму</dx-button>
+
     <form (submit)="onFormSubmit($event)">
         <dx-form id="form"
                 #form

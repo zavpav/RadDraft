@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  mainEndpoint: "https://localhost:7234/"
+  mainEndpoint: "https://localhost:7234/",
+  signalRNotifier: "/notify"
 };
 
 /*

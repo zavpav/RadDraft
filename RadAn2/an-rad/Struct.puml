@@ -1,0 +1,35 @@
+@startuml
+
+actor "Пользователь" as user
+
+node "АСУБС" {
+    portin "Веб-прокси\nбалансировщик" as prx
+    rectangle {
+    artifact "Сервис уведомлений" << signalR >> as notify
+    artifact "Сервис получения данных" << web-api >> as ser1
+    artifact "Сервис получения данных" << web-api >> as ser2
+    }
+    queue Очередь as q
+    control "Сервис Сохранение документа" << worker >>  as wrk1
+}
+
+rectangle #Orange  "'Читающие' сервисы\n(получение данных, отчёты,\n'отображение' документов)" as wacRead
+rectangle #Orange  "Изменяющий сервис\nДелает проверки БР и т.д.\nперед изменением БР" as wacWrk
+
+user --> prx
+
+ser1 .. wacRead
+wrk1 .. wacWrk
+
+prx -> ser1
+prx -> ser2
+
+ser1 -- q
+ser2 -- q
+
+q --> notify
+notify -> prx
+
+q -- wrk1
+
+@enduml

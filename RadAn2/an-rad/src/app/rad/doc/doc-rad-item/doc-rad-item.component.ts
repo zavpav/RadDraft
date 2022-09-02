@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DxFormComponent } from 'devextreme-angular';
+import { DxiConnectionPointComponent } from 'devextreme-angular/ui/nested';
 import { Column } from 'devextreme/ui/data_grid';
+import { ServerNotifier } from 'src/app/services/ServerNotifier';
 import { ColumnInfo } from 'src/app/shared/list-grid/list-grid.component';
 import { MetaInformation } from 'src/app/SharedClasses/MetaInformation';
 import { environment } from 'src/environments/environment';
@@ -47,13 +49,39 @@ export class DocRadItemComponent implements OnInit {
   getRowsColumns!: ColumnInfo[];
 
   constructor(private activatedRoute: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private severNotifier: ServerNotifier
     ) {
       this.entity = {} as DocRadEdit
       this.meta = undefined
       const fn = (e: any) => this.customizationFormItemInternal(e)
       this.customizationFormItem = fn
       this.hasError = false
+  }
+
+
+
+  saveForm(){
+    var data : any = {
+      doc: this.entity,
+      rows: this.entityRows
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-signalr-connection': this.severNotifier.connectionId,
+    });
+
+    this.http.post(environment.mainEndpoint + "DocRad/Entity", this.entity, {headers: headers})
+    .subscribe((x: any) => {
+      console.log("start saving doc with token ", x)
+      const messageToken = x.executionId;
+      this.severNotifier.signalConnection.on("SendProgress", 
+        xx => {
+        console.log('saving message with token ', messageToken, xx)
+      })
+    })
+
   }
 
   ngOnInit(): void {
