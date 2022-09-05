@@ -2,7 +2,7 @@
 {
     public class ProgressNotify
     {
-        public string ExecutionId { get; set; }
+        public string? ExecutionId { get; set; }
 
         public int Percent { get; set; }
 

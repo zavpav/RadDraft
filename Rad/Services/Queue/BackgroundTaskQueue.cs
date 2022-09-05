@@ -5,11 +5,13 @@ using System.Threading.Channels;
 
 namespace Rad.Services.Queue;
 
+#pragma warning disable CS1570 // XML comment has badly formed XML
 /// <summary>
 /// https://docs.microsoft.com/ru-ru/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-6.0&tabs=visual-studio
 /// Раздел "Фоновые задачи в очереди"
 /// </summary>
 public class BackgroundTaskQueue : IBackgroundTaskQueue
+#pragma warning restore CS1570 // XML comment has badly formed XML
 {
     private readonly Channel<Func<CancellationToken, ValueTask>> _queue;
 

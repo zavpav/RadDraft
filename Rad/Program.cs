@@ -1,4 +1,5 @@
 using Rad.Db;
+using Rad.Domain.Brs;
 using Rad.Services.Queue;
 using Rad.SignalR;
 using Serilog;
@@ -19,10 +20,28 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog();
 
+builder.Services.AddSingleton<IBrRepository, BrRepository>();
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddPooledDbContextFactory<RadDbContext>(opt => opt
+        .UseNpgsql($"Host=localhost;Port=5441;Database=postgres;Username=postgres;Password=123456")
+        .AddInterceptors(new DbLogInterceptor(Log.Logger))
+        .EnableDetailedErrors()
+        .EnableSensitiveDataLogging(true)
+        .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
+        );
+
+builder.Services.AddPooledDbContextFactory<BrDbContext>(opt => opt
+        .UseNpgsql($"Host=localhost;Port=5441;Database=postgres;Username=postgres;Password=123456")
+        .AddInterceptors(new DbLogInterceptor(Log.Logger))
+        .EnableDetailedErrors()
+        .EnableSensitiveDataLogging(true)
+        .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information)
+        );
+
+builder.Services.AddPooledDbContextFactory<GrbsDbContext>(opt => opt
         .UseNpgsql($"Host=localhost;Port=5441;Database=postgres;Username=postgres;Password=123456")
         .AddInterceptors(new DbLogInterceptor(Log.Logger))
         .EnableDetailedErrors()

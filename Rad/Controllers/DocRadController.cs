@@ -70,7 +70,7 @@ public class DocRadController : Controller
         foreach (var docRad in docRadList)
         {
             docRad.Actions = new[] {
-                    new ObjectAction() { Operation = "edit" } 
+                    new ObjectAction("edit")
             };
         }
 

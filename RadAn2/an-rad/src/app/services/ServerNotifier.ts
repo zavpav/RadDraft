@@ -21,7 +21,7 @@ export class ServerNotifier {
                 this.connectionId = this.signalConnection.connectionId;
             })
             .catch(x => {
-                console.log("Notify Error ", x)
+                console.error("Notify Error ", x)
             })
     }
 

@@ -63,20 +63,20 @@ public class SprRadController : Controller
             var op = Random.Shared.Next(3);
             if (op == 2)
                 sprRad.Actions = new[] { 
-                    new ObjectAction() { Operation = "edit" },
-                    new ObjectAction() { Operation = "delete" },
-                    new ObjectAction() { Operation = "print" },
+                    new ObjectAction("edit"),
+                    new ObjectAction("delete"),
+                    new ObjectAction("print"),
                 };
             else if (op == 1)
             {
                 sprRad.Actions = new[] {
-                    new ObjectAction() { Operation = "edit" },
+                    new ObjectAction("edit"),
                 };
             }
             else
                 sprRad.Actions = new[] {
-                    new ObjectAction() { Operation = "edit" },
-                    new ObjectAction() { Operation = "delete" },
+                    new ObjectAction("edit"),
+                    new ObjectAction("delete"),
                 };
         }
         return sprRadList;
