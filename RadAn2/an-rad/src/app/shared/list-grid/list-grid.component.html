@@ -27,6 +27,7 @@
         [width]="c.width"
         [format]="c.format"
         [cellTemplate]="c.dataField === 'actions' ? 'actionsTemplate' : undefined" 
+        [allowResizing]="true"
         [allowSorting]="allowVisualOperation(c)"
         [allowSearch]="allowVisualOperation(c)"
         [allowReordering]="allowVisualOperation(c)"

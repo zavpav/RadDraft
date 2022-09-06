@@ -29,6 +29,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditGridComponent } from './shared/edit-grid/edit-grid.component';
 
 import { locale } from 'devextreme/localization';
+import { ToRezervListComponentComponent } from './distribution/to-rezerv/list/to-rezerv-list.component/to-rezerv-list.component.component';
+import { ToPbsListComponentComponent } from './distribution/to-pbs/list/to-pbs-list.component/to-pbs-list.component.component';
+import { KuDetailListComponentComponent } from './distribution/ku-detail/list/ku-detail-list.component/ku-detail-list.component.component';
+import { KuDetailEntityComponentComponent } from './distribution/ku-detail/entity/ku-detail-entity.component/ku-detail-entity.component.component';
+import { ToRezervEntityComponentComponent } from './distribution/to-rezerv/entity/to-rezerv-entity.component/to-rezerv-entity.component.component';
+import { ToPbsEntityComponentComponent } from './distribution/to-pbs/entity/to-pbs-entity.component/to-pbs-entity.component.component';
 locale('ru')
 
 
@@ -42,7 +48,13 @@ locale('ru')
     NotFoundComponent,
     DocRadListComponent,
     DocRadItemComponent,
-    EditGridComponent
+    EditGridComponent,
+    ToRezervListComponentComponent,
+    ToPbsListComponentComponent,
+    KuDetailListComponentComponent,
+    KuDetailEntityComponentComponent,
+    ToRezervEntityComponentComponent,
+    ToPbsEntityComponentComponent
   ],
   imports: [
     BrowserModule,

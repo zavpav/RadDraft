@@ -21,6 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 
 builder.Services.AddSingleton<IBrRepository, BrRepository>();
+builder.Services.AddTransient<Serilog.ILogger>(_ => Log.Logger);
 
 builder.Services.AddHttpContextAccessor();
 

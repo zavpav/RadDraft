@@ -21,10 +21,10 @@ public class DocBrChangerBase<TDoc, TRow> : IDoc
     public string DocStatus { get; set; }
 
     /// <summary> Русское наименование статуса документа </summary>
-    public string DocStatusName { get; set; }
+    public string DocStatusName { get; set; } = string.Empty;
 
     /// <summary> Коммент </summary>
-    public string Descr { get; set; }
+    public string Descr { get; set; } = string.Empty;
 
     /// <summary> Пользователь, создавший документ </summary>
     public long UserSid { get; set; }
@@ -43,5 +43,11 @@ public class DocBrChangerBase<TDoc, TRow> : IDoc
 
     /// <summary> Является "первоначальным распределением" </summary>
     public bool IsFirstDistribution { get; set; }
+
+    /// <summary> Список строк. </summary>
+    /// <remarks>
+    /// Может быть надо вынести отсюда для документов с пачкой спецификаций
+    /// </remarks>
+    public ICollection<TRow>? Rows { get; set; }
 }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
