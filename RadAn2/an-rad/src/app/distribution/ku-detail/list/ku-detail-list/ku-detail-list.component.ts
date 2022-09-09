@@ -3,11 +3,10 @@ import { defaultColumnList } from 'src/app/distribution/doc-distribution-list-ba
 import { ColumnInfo } from 'src/app/shared/list-grid/list-grid.component';
 
 @Component({
-  selector: 'app-to-rezerv-list.component',
-  templateUrl: './to-rezerv-list.component.component.html',
-  styleUrls: ['./to-rezerv-list.component.component.scss']
+  selector: 'app-ku-detail-list',
+  templateUrl: './ku-detail-list.component.html',
 })
-export class ToRezervListComponentComponent implements OnInit {
+export class KuDetailListComponent implements OnInit {
 
   constructor() { }
 
@@ -17,4 +16,5 @@ export class ToRezervListComponentComponent implements OnInit {
   getColumns(): ColumnInfo[] {
     return defaultColumnList()
   }
+
 }

@@ -1,0 +1,41 @@
+<p>distribution-tree-list works!</p>
+<ng-container *ngIf="rows != null">
+
+    <dx-tree-list
+        id="tasks"
+        [dataSource]="rows"
+        keyExpr="id"
+        [autoExpandAll]="true"
+        parentIdExpr="parentId"
+        [showBorders]="true"
+
+        (onCellPrepared)="onCellPrepared($event)"
+        (onEditingStart)="onEditingStart($event)"
+        (onEditorPrepared)="onEditorPrepared($event)"
+        (onEditorPreparing)="onEditorPreparing($event)"
+    >
+        <dxo-editing mode="cell" [allowUpdating]="true" startEditAction="dblClick"></dxo-editing>
+        <dxo-keyboard-navigation
+            [editOnKeyPress]="true"
+            [enterKeyAction]="'startEdit'"
+        ></dxo-keyboard-navigation>
+
+
+        <dxi-column dataField="fullSprKey" caption="Полный код"></dxi-column>
+        <dxi-column dataField="smBa1"  caption="БА {{year}}"    dataType="number" [width]="150" format="#,##0.00" editCellTemplate="numBoxEditor"></dxi-column>
+        <dxi-column dataField="smBa2"  caption="БА {{year+1}}"  dataType="number" [width]="150" format="#,##0.00" editCellTemplate="numBoxEditor"></dxi-column>
+        <dxi-column dataField="smBa3"  caption="БА {{year+2}}"  dataType="number" [width]="150" format="#,##0.00" editCellTemplate="numBoxEditor"></dxi-column>
+        <dxi-column dataField="smLbo1" caption="ЛБО {{year}}"   dataType="number" [width]="150" format="#,##0.00" editCellTemplate="numBoxEditor"></dxi-column>
+        <dxi-column dataField="smLbo2" caption="ЛБО {{year+1}}" dataType="number" [width]="150" format="#,##0.00" editCellTemplate="numBoxEditor"></dxi-column>
+        <dxi-column dataField="smLbo3" caption="ЛБО {{year+2}}" dataType="number" [width]="150" format="#,##0.00" editCellTemplate="numBoxEditor"></dxi-column>
+
+        <div *dxTemplate="let cellInfo of 'numBoxEditor'">
+            <dx-number-box format="#,##0.00" 
+                [ngStyle]="{'background-color': 'gold'}"
+                [value]="cellInfo.value"
+                (onValueChanged)="cellInfo.setValue($event.value)"
+            ></dx-number-box>
+        </div>
+
+    </dx-tree-list>
+</ng-container>

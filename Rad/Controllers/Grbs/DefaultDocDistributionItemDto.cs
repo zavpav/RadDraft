@@ -1,12 +1,13 @@
 ﻿namespace Rad.Controllers.Grbs
 {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public class DefaultDocDistributionItemDto
     {
         /// <summary> ИД </summary>
         public long Id { get; set; }
 
         /// <summary> Номер документа </summary>
-        public string DocNum { get; set; }
+        public string? DocNum { get; set; }
 
         /// <summary> Дата подписи документа исполнителем </summary>
         public DateTime? ApproveDt { get; set; }
@@ -29,4 +30,5 @@
         /// <summary> Является "первоначальным распределением" </summary>
         public bool IsFirstDistribution { get; set; }
     }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 }

@@ -1,0 +1,36 @@
+<p>distribution-header.component works!</p>
+<div class="field">
+    <div class="label">Номер</div>
+    <div class="value">
+        <dx-text-box
+            [(value)]="entity.docNum"
+            [readOnly]="true"
+            valueChangeEvent="keyup"
+            [maxLength]="40"
+        ></dx-text-box>
+    </div>
+</div>
+<div class="field">
+    <div class="label">Статус</div>
+    <div class="value">
+        <dx-text-box
+            [(value)]="entity.docStatusName"
+            [readOnly]="true"
+            valueChangeEvent="keyup"
+            [maxLength]="40"
+        ></dx-text-box>
+    </div>
+</div>
+<div class="field">
+    <div class="label">Дата создания</div>
+    <div class="value">
+        <dx-date-box
+            applyValueMode="useButtons"
+            [readOnly]="false"
+            [value]="testDate"
+            (valueChange)="testDate = $any($event)"
+            type="date"
+            valueChangeEvent="keyup"
+        ></dx-date-box>
+    </div>
+</div>

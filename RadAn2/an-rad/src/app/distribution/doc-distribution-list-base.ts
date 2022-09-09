@@ -24,3 +24,26 @@ export function defaultColumnList() : ColumnInfo[] {
       // { caption: "Пользователь",    dataField: "userName",     dataType: "string", width: 180},
     ]
   }
+
+
+export interface DocDistributionDocBase {
+  id: number
+  docNum: string
+  approveDt: string
+  createDt: Date
+  docStatusName: string
+  descr: string
+  userId: number
+  topFullSprKey: string
+}
+
+export interface DocDistributionRowBase{
+  fullSprKey: string
+  smBa1:  number
+  smBa2:  number
+  smBa3:  number
+  smLbo1: number
+  smLbo2: number
+  smLbo3: number
+  smPof:  number
+}

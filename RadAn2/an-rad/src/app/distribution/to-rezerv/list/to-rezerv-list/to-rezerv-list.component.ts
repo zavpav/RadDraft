@@ -3,11 +3,10 @@ import { defaultColumnList } from 'src/app/distribution/doc-distribution-list-ba
 import { ColumnInfo } from 'src/app/shared/list-grid/list-grid.component';
 
 @Component({
-  selector: 'app-to-pbs-list.component',
-  templateUrl: './to-pbs-list.component.component.html',
-  styleUrls: ['./to-pbs-list.component.component.scss']
+  selector: 'app-to-rezerv-list',
+  templateUrl: './to-rezerv-list.component.html',
 })
-export class ToPbsListComponentComponent implements OnInit {
+export class ToRezervListComponent implements OnInit {
 
   constructor() { }
 

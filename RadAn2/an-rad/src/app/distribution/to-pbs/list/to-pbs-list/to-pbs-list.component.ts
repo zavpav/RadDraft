@@ -3,11 +3,10 @@ import { defaultColumnList } from 'src/app/distribution/doc-distribution-list-ba
 import { ColumnInfo } from 'src/app/shared/list-grid/list-grid.component';
 
 @Component({
-  selector: 'app-ku-detail-list.component',
-  templateUrl: './ku-detail-list.component.component.html',
-  styleUrls: ['./ku-detail-list.component.component.scss']
+  selector: 'app-to-pbs-list',
+  templateUrl: './to-pbs-list.component.html',
 })
-export class KuDetailListComponentComponent implements OnInit {
+export class ToPbsListComponent implements OnInit {
 
   constructor() { }
 
@@ -17,5 +16,4 @@ export class KuDetailListComponentComponent implements OnInit {
   getColumns(): ColumnInfo[] {
     return defaultColumnList()
   }
-
 }

@@ -6,12 +6,14 @@ import {
   DxBulletModule,
   DxTemplateModule,
   DxDataGridModule,
+  DxTreeListModule,
   DxButtonModule,
   DxTooltipModule,
   DxPopoverModule,
 
   DxFormModule,
   DxTextBoxModule,
+  DxNumberBoxModule,
   DxDateBoxModule,
   DxTabPanelModule
 } from 'devextreme-angular';
@@ -29,12 +31,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditGridComponent } from './shared/edit-grid/edit-grid.component';
 
 import { locale } from 'devextreme/localization';
-import { ToRezervListComponentComponent } from './distribution/to-rezerv/list/to-rezerv-list.component/to-rezerv-list.component.component';
-import { ToPbsListComponentComponent } from './distribution/to-pbs/list/to-pbs-list.component/to-pbs-list.component.component';
-import { KuDetailListComponentComponent } from './distribution/ku-detail/list/ku-detail-list.component/ku-detail-list.component.component';
-import { KuDetailEntityComponentComponent } from './distribution/ku-detail/entity/ku-detail-entity.component/ku-detail-entity.component.component';
-import { ToRezervEntityComponentComponent } from './distribution/to-rezerv/entity/to-rezerv-entity.component/to-rezerv-entity.component.component';
-import { ToPbsEntityComponentComponent } from './distribution/to-pbs/entity/to-pbs-entity.component/to-pbs-entity.component.component';
+import { ToRezervListComponent } from './distribution/to-rezerv/list/to-rezerv-list/to-rezerv-list.component';
+import { ToPbsListComponent } from './distribution/to-pbs/list/to-pbs-list/to-pbs-list.component';
+import { KuDetailListComponent } from './distribution/ku-detail/list/ku-detail-list/ku-detail-list.component';
+import { KuDetailEntityComponent } from './distribution/ku-detail/entity/ku-detail-entity/ku-detail-entity.component';
+import { ToRezervEntityComponent } from './distribution/to-rezerv/entity/to-rezerv-entity/to-rezerv-entity.component';
+import { ToPbsEntityComponent } from './distribution/to-pbs/entity/to-pbs-entity/to-pbs-entity.component';
+import { DistributionHeaderComponent } from './distribution/distribution-header/distribution-header.component';
+import { DistributionTreeListComponent } from './distribution/distribution-tree-list/distribution-tree-list.component';
 locale('ru')
 
 
@@ -49,12 +53,14 @@ locale('ru')
     DocRadListComponent,
     DocRadItemComponent,
     EditGridComponent,
-    ToRezervListComponentComponent,
-    ToPbsListComponentComponent,
-    KuDetailListComponentComponent,
-    KuDetailEntityComponentComponent,
-    ToRezervEntityComponentComponent,
-    ToPbsEntityComponentComponent
+    ToRezervListComponent,
+    ToPbsListComponent,
+    KuDetailListComponent,
+    KuDetailEntityComponent,
+    ToRezervEntityComponent,
+    ToPbsEntityComponent,
+    DistributionHeaderComponent,
+    DistributionTreeListComponent
   ],
   imports: [
     BrowserModule,
@@ -64,12 +70,14 @@ locale('ru')
     DxBulletModule,
     DxTemplateModule,
     DxDataGridModule,
+    DxTreeListModule,
     DxButtonModule,
     DxTooltipModule,
     DxPopoverModule,
     DxTabPanelModule,
     DxFormModule,
     DxTextBoxModule,
+    DxNumberBoxModule,
     DxDateBoxModule
   ],
   providers: [],
