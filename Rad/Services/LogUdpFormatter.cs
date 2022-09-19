@@ -39,7 +39,11 @@ $@"<log4j:event level=""{level}"" timestamp=""{logEvent.Timestamp.ToUnixTimeMill
                 else
                 {
                     return string.Format("<log4j:data name=\"Exceptions\" value=\"{0}\"/>",
-                        logEvent.Exception.StackTrace.Replace("<", "&lt;").Replace(">", "&gt;"));
+                        logEvent.Exception.ToString()
+                                .Replace("&", "&amp;")
+                                .Replace("<", "&lt;")
+                                .Replace(">", "&gt;")
+                            );
                 }
             }
             else
