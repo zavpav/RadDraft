@@ -31,7 +31,7 @@
 
         <div *dxTemplate="let cellInfo of 'numBoxEditor'">
             <dx-number-box format="#,##0.00" 
-                [ngStyle]="{'background-color': 'gold'}"
+                [style.background-color]="'gold'"
                 [value]="cellInfo.value"
                 (onValueChanged)="cellInfo.setValue($event.value)"
             ></dx-number-box>
