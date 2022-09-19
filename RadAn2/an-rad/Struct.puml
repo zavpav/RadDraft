@@ -8,6 +8,7 @@ node "АСУБС" {
     artifact "Сервис уведомлений" << signalR >> as notify
     artifact "Сервис получения данных" << web-api >> as ser1
     artifact "Сервис получения данных" << web-api >> as ser2
+    artifact "Сервис отчетов" << ASP.NET Core spreadsheet >> as report
     }
     queue Очередь as q
     control "Сервис Сохранение документа" << worker >>  as wrk1
@@ -15,6 +16,7 @@ node "АСУБС" {
 
 rectangle #Orange  "'Читающие' сервисы\n(получение данных, отчёты,\n'отображение' документов)" as wacRead
 rectangle #Orange  "Изменяющий сервис\nДелает проверки БР и т.д.\nперед изменением БР" as wacWrk
+rectangle #LightBlue "У Devexpress aps.net core\nесть отображатель spreadsheet вроде\nhttps://demos.devexpress.com/ASPNetCore/Demo/Spreadsheet/Overview/" as repInfo
 
 user --> prx
 
@@ -23,10 +25,10 @@ wrk1 .. wacWrk
 
 prx -> ser1
 prx -> ser2
-
 ser1 -- q
 ser2 -- q
-
+prx -> report
+report .. repInfo
 q --> notify
 notify -> prx
 
