@@ -10,7 +10,7 @@ namespace Rad.Controllers.Report
     public class Reporting : ControllerBase
     {
         [HttpGet("Html")]
-        public async Task<IActionResult> GetExcelHtml()
+        public Task<IActionResult> GetExcelHtml()
         {
             //var workbook = new Workbook();
             //workbook.LoadDocument(@"C:\Projects\Fsf\CS\Sphaera.Bp\bin\Debug\Reports\Br2019\BudgetEstimateReportRbs.xlsx");
@@ -29,7 +29,7 @@ namespace Rad.Controllers.Report
             //};
 
             //return contentResult;
-            return Ok();
+            return Task.FromResult((IActionResult)Ok());
         }
     }
 }
