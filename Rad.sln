@@ -3,12 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rad", "Rad\Rad.csproj", "{9BAC8662-5C28-4D81-89B0-46F9B8A2CAFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rad", "Rad\Rad.csproj", "{9BAC8662-5C28-4D81-89B0-46F9B8A2CAFC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2BB0D015-404E-45AC-BE5C-F375530211DE}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppRep", "WebAppRep\WebAppRep.csproj", "{1617B9B5-6396-45E4-89FA-71BFB6B1103E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleTest", "ConsoleTest\TestConsoleTest.csproj", "{39C34FC5-7643-461B-8981-1617E864EDE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowCustom.SpecFlowPlugin", "SpecFlowCustom.SpecFlowPlugin\SpecFlowCustom.SpecFlowPlugin.csproj", "{7AD08832-19D8-432A-9D10-6C3FB347D35D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +26,18 @@ Global
 		{9BAC8662-5C28-4D81-89B0-46F9B8A2CAFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BAC8662-5C28-4D81-89B0-46F9B8A2CAFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BAC8662-5C28-4D81-89B0-46F9B8A2CAFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1617B9B5-6396-45E4-89FA-71BFB6B1103E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1617B9B5-6396-45E4-89FA-71BFB6B1103E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1617B9B5-6396-45E4-89FA-71BFB6B1103E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1617B9B5-6396-45E4-89FA-71BFB6B1103E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39C34FC5-7643-461B-8981-1617E864EDE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39C34FC5-7643-461B-8981-1617E864EDE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39C34FC5-7643-461B-8981-1617E864EDE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39C34FC5-7643-461B-8981-1617E864EDE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AD08832-19D8-432A-9D10-6C3FB347D35D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AD08832-19D8-432A-9D10-6C3FB347D35D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AD08832-19D8-432A-9D10-6C3FB347D35D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AD08832-19D8-432A-9D10-6C3FB347D35D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
